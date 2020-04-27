@@ -36,4 +36,9 @@ public class UserController {
         return ResponseEntity.ok(saveUserId);
     }
 
+    @PostMapping("/auth")
+    ResponseEntity<Boolean> auth(@RequestBody UserDto user)  {
+        return ResponseEntity.ok(userService.auth(user));
+    }
+
 }

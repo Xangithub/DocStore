@@ -24,12 +24,16 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class Document extends AbstractEntity{
-    private Integer number;
+    private Integer docNumber;
     @ManyToOne
-//    @JoinColumn(name="CUST_ID", nullable=false)
+    @JoinColumn(name="client_id", nullable=false)
     private Client client;
+    @MapsId
     @OneToOne
+    @JoinColumn(name = "file_id")
     private File file;
     private LocalDate docDate; //бизнес дата документа
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private User user;  // Пользователь, разместивший документ
 }

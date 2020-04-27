@@ -16,8 +16,7 @@ import javax.persistence.*;
 @Accessors(chain = true)
 @Setter
 @Getter
-public class FileDto {
-    private Integer id;
+public class FileDto extends AbstractDto{
     private String fileName;
     private String fileKey;
     private byte[] data;

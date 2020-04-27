@@ -19,8 +19,7 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 @Setter
 @Getter
-public class DocumentDto {
-    private Long id;
+public class DocumentDto extends AbstractDto {
     private String number; // нумерация док-ов может включать буквы
     private Integer clientId;
     private Integer fileId;

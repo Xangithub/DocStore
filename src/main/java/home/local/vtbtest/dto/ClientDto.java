@@ -6,21 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @Setter
 @Getter
-public class ClientDto {
-    @Id @GeneratedValue
-    private Integer id;
+public class ClientDto extends AbstractDto {
     private String name;
+    @NotNull
     private String inn;
     private String ogrn;
-    private LocalDate createDate;
-    Integer documentId;
+    private List<Integer> documentId;
 }

@@ -7,6 +7,8 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 /***
         * Пользователь
@@ -27,4 +29,6 @@ public class User extends AbstractEntity{
     @Column(name = "pass_hash")
     String passHash;
     String fullName;
+    @OneToMany(mappedBy = "user" )
+    List<Document> documentList;
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +33,11 @@ public class ClientService {
     public void delete(Integer id) {
 //        final int i = documentRepository.countDocumentsByClient_Id(id);
 //        if(i ==0)  clientRepository.deleteById(id);
+    }
+
+    public Long idByInn(String inn) {
+        final Optional<Client> clientByInn = clientRepository.findByInn(inn);
+        Long id= clientByInn.isPresent() ? clientByInn.get().getId() : null;
+        return id;
     }
 }
