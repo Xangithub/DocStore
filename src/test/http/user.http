@@ -9,6 +9,16 @@ POST http://localhost:8080/users/create
 Content-Type: application/json; charset=utf-8;
 
 {
+  "login": "Из запроса1",
+  "pass": "PassOdered1",
+  "fullName": "Moe polnoe imya1"
+}
+
+#### Создание клиента
+POST http://localhost:8080/users/create
+Content-Type: application/json; charset=utf-8;
+
+{
   "login": "Из запроса2",
   "pass": "PassOdered2",
   "fullName": "Moe polnoe imya22"
