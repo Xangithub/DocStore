@@ -49,7 +49,7 @@ public class DocumentController {
     }
 
     @PostMapping("/create")
-    ResponseEntity<DocumentDto> save(@RequestPart("document") DocumentDto document, MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
+    ResponseEntity<DocumentDto> save(@RequestPart("document") DocumentDto document, MultipartFile file) {
         documentService.save(document, file);
         return null;
     }

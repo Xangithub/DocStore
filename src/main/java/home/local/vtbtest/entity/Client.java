@@ -21,5 +21,5 @@ public class Client extends AbstractEntity {
     private String name;
     private String ogrn;
     @OneToMany(mappedBy = "client")
-    List<Document> document;
+    List<Document> documentsList;
 }

@@ -21,9 +21,8 @@ import java.time.LocalDate;
 @Getter
 public class DocumentDto extends AbstractDto {
     private String number; // нумерация док-ов может включать буквы
-    private Integer clientId;
-    private Integer fileId;
+    private Long clientId;
+    private Long fileId;
     private LocalDate docDate;
-    private Integer userId;
-    private LocalDate docCreateDate;
+    private Long userId;
 }

@@ -19,5 +19,5 @@ public class ClientDto extends AbstractDto {
     @NotNull
     private String inn;
     private String ogrn;
-    private List<Integer> documentId;
+    private List<Long> documentsIdList;
 }
