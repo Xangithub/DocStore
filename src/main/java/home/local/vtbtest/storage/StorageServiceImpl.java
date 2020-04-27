@@ -1,6 +1,6 @@
 package home.local.vtbtest.storage;
 
-import home.local.vtbtest.model.File;
+import home.local.vtbtest.entity.File;
 import home.local.vtbtest.repository.FileRepository;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -86,7 +86,7 @@ public class StorageServiceImpl implements StorageService {
     } */
 
     @Override
-    public Map<Integer, Path> loadAll() {
+    public Map<Long, Path> loadAll() {
     /*    try {
             return Files.walk(this.rootLocation, 1)
                     .filter(path -> !path.equals(this.rootLocation))
@@ -94,7 +94,7 @@ public class StorageServiceImpl implements StorageService {
         } catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);
         }*/
-        final Map<Integer, Path> all= new HashMap<>();
+        final Map<Long, Path> all= new HashMap<>();
         final Iterable<File> fileRepositoryAll = fileRepository.findAll();
         fileRepositoryAll.forEach(file -> all.put(file.getId(),Paths.get(file.getFileName())));
         return  all;
@@ -107,7 +107,7 @@ public class StorageServiceImpl implements StorageService {
 
 
     @Override
-    public Resource loadAsResource(Integer fileId) {
+    public Resource loadAsResource(Long fileId) {
         final Optional<File> fileById = fileRepository.findById(fileId);
         final File file = fileById.orElseThrow(() -> new StorageFileNotFoundException("Could not read file with id " + fileById));
         if(file.getData()==null){

@@ -1,0 +1,38 @@
+# Прочитать все
+GET http://localhost:8080/documents/all
+
+###
+
+# Создание клиента
+POST http://localhost:8080/documents/create
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="document"
+Content-Type: application/json; charset=utf-8;
+
+ {
+    "number": 123,
+    "docDate": "2111-11-02",
+    "docCreateDate": "2111-11-03",
+    "client": {
+              "name": "РОга и.... ну",
+              "inn": "123",
+              "ogrn": "321",
+              "respawnDate": "2066-06-06"
+    },
+     "file": {
+     "fileName": "Bugaga"
+    }
+ }
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="sample.dat"
+
+< D:/intel-lan/log/setupapi.dev.20121022_125727.log
+--WebAppBoundary--
+
+###
+
+# Удалить клиента
+DELETE http://localhost:8080/documents/delete/3

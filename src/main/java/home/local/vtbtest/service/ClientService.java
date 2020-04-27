@@ -1,7 +1,6 @@
 package home.local.vtbtest.service;
 
 import home.local.vtbtest.entity.Client;
-import home.local.vtbtest.model.Document;
 import home.local.vtbtest.repository.ClientRepository;
 import home.local.vtbtest.repository.DocumentRepository;
 import lombok.NonNull;
@@ -22,7 +21,7 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Client findOne(Integer id) throws Exception {
+    public Client findOne(Long id) throws Exception {
         return clientRepository.findById(id).orElseThrow(() -> new Exception("клиент с id= " + id + "отсутствует"));
     }
 
@@ -31,7 +30,7 @@ public class ClientService {
     }
 
     public void delete(Integer id) {
-        final int i = documentRepository.countDocumentsByClient_Id(id);
-        if(i ==0)  clientRepository.deleteById(id);
+//        final int i = documentRepository.countDocumentsByClient_Id(id);
+//        if(i ==0)  clientRepository.deleteById(id);
     }
 }

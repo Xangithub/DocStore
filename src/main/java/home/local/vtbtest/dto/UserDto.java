@@ -1,31 +1,29 @@
-package home.local.vtbtest.model;
+package home.local.vtbtest.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /***
         * Пользователь
         ·         Логин
         ·         Пароль в зашифрованном виде
         ·         ФИО
-        ·         Дата регистрации
 */
 
-@Entity
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 @Setter
 @Getter
-public class User {
-    @Id @GeneratedValue
-    Integer id;
+public class UserDto extends AbstractDto{
+    @NotNull
     String login;
-    String hashPass;
+    @NotNull
     String pass;
     String fullName;
 }

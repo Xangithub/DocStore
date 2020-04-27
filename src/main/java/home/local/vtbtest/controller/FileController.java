@@ -31,7 +31,7 @@ public class FileController {
 
     @GetMapping("/files/{id}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFileId(@PathVariable Integer id) {
+    public ResponseEntity<Resource> serveFileId(@PathVariable Long id) {
 
         Resource file = storageService.loadAsResource(id);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,

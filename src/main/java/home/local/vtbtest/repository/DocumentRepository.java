@@ -1,12 +1,10 @@
 package home.local.vtbtest.repository;
 
-import home.local.vtbtest.model.Document;
+import home.local.vtbtest.entity.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface DocumentRepository extends JpaRepository<Document, Long> {
 
-public interface DocumentRepository extends JpaRepository<Document, Integer> {
-
-    List<Document> findByClientId(Integer id);
-    int countDocumentsByClient_Id(Integer id);
+//    List<Document> findByClientId(Long id);
+//    int countDocumentsByClient_Id(Long id);
 }

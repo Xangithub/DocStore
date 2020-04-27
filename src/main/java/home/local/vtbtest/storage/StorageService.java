@@ -11,13 +11,13 @@ public interface StorageService {
 
     void store(MultipartFile file);
 
-    Map<Integer, Path> loadAll();
+    Map<Long, Path> loadAll();
 
     Path load(String filename);
 
     Resource loadAsResource(String filename);
 
-    Resource loadAsResource(Integer fileId);
+    Resource loadAsResource(Long fileId);
 
     void deleteAll();
 

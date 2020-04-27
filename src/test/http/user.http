@@ -1,0 +1,21 @@
+# Прочитать всех клиентов
+## подготовка базы INSERT INTO "USER"("ID","CREATED","UPDATED","FULL_NAME","LOGIN","PASS_HASH")VALUES(1,NOW(),NOW(),'Fuu22l','Lala2l','rara2');
+GET http://localhost:8080/users/all
+
+###
+
+# Создание клиента
+POST http://localhost:8080/users/create
+Content-Type: application/json; charset=utf-8;
+
+{
+  "login": "Из запроса2",
+  "pass": "PassOdered2",
+  "fullName": "Moe polnoe imya22"
+}
+###
+
+# Удалить клиента
+DELETE http://localhost:8080/clients/delete/3
+
+###

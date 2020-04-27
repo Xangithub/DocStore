@@ -1,4 +1,4 @@
-package home.local.vtbtest.model;
+package home.local.vtbtest.entity;
 
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -17,9 +17,7 @@ import javax.persistence.*;
 @Accessors(chain = true)
 @Setter
 @Getter
-public class File {
-    @Id  @GeneratedValue
-    private Integer id;
+public class File extends AbstractEntity{
     private String fileName;
     private String fileKey;
     @Lob

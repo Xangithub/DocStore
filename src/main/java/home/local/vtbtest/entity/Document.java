@@ -1,7 +1,5 @@
-package home.local.vtbtest.model;
+package home.local.vtbtest.entity;
 
-import home.local.vtbtest.entity.Client;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,20 +18,18 @@ import java.time.LocalDate;
  ·         Дата создания
  */
 @Entity
-@Table(name = "Documents")
+@Table(name = "documents")
 @RequiredArgsConstructor
 @Accessors(chain = true)
 @Setter
 @Getter
-public class Document {
-    @Id @GeneratedValue
-    private Integer id;
-    @OneToOne
+public class Document extends AbstractEntity{
+    private Integer number;
+    @ManyToOne
+//    @JoinColumn(name="CUST_ID", nullable=false)
     private Client client;
     @OneToOne
     private File file;
-    private LocalDate docDate;
-    @OneToOne
+    private LocalDate docDate; //бизнес дата документа
     private User user;  // Пользователь, разместивший документ
-    private LocalDate docCreateDate;
 }

@@ -20,7 +20,7 @@ public class ClientController {
     }
 
     @GetMapping("/client/{id}")
-    Client readOne(@PathVariable Integer id) throws Exception {
+    Client readOne(@PathVariable Long id) throws Exception {
         return clientService.findOne(id);
     }
 
