@@ -25,7 +25,12 @@ Content-Type: application/json; charset=utf-8;
 }
 ###
 
-# Удалить клиента
-DELETE http://localhost:8080/clients/delete/3
+#получения по id
+GET http://localhost:8080/users/read/2
+
+###
+
+# Удалить пользователя - НЕ РЕАЛИЗОВАНО
+DELETE http://localhost:8080/users/delete/2
 
 ###

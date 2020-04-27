@@ -1,5 +1,6 @@
 package home.local.vtbtest.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -24,6 +25,7 @@ public class UserDto extends AbstractDto{
     @NotNull
     String login;
     @NotNull
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     String pass;
     String fullName;
 }
