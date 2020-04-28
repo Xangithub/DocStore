@@ -3,7 +3,7 @@ GET http://localhost:8080/documents/all
 
 ###
 
-# Создание клиента
+# Создание документа
 POST http://localhost:8080/documents/create
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 

@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class DocumentDto extends AbstractDto {
-    private String number; // нумерация док-ов может включать буквы
+    private String docNumber; // нумерация док-ов может включать буквы
     private Long clientId;
     private Long fileId;
     private LocalDate docDate;

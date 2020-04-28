@@ -4,7 +4,7 @@ GET http://localhost:8080/users/all
 
 ###
 
-# Создание клиента
+# Создание пользователя
 POST http://localhost:8080/users/create
 Content-Type: application/json; charset=utf-8;
 
@@ -14,7 +14,7 @@ Content-Type: application/json; charset=utf-8;
   "fullName": "Moe polnoe imya1"
 }
 
-#### Создание клиента
+####  Создание пользователя
 POST http://localhost:8080/users/create
 Content-Type: application/json; charset=utf-8;
 
@@ -28,7 +28,59 @@ Content-Type: application/json; charset=utf-8;
 #получения по id
 GET http://localhost:8080/users/read/2
 
+
 ###
+
+#Проверка взятия документов - создали клиента
+POST http://localhost:8080/clients/create
+Content-Type: application/json; charset=utf-8;
+
+
+{
+  "name": "ООО Моя 22",
+  "inn": "112222",
+  "ogrn": "33333"
+}
+###
+
+# Создание документа
+POST http://localhost:8080/documents/create
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="document"
+Content-Type: application/json; charset=utf-8;
+
+ {
+    "number": "123",
+    "docDate": "2111-11-02",
+    "clientId": 3,
+    "userId": 1
+
+ }
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="sample.dat"
+
+< D:/intel-lan/log/setupapi.dev.20121022_125727.log
+--WebAppBoundary--
+
+###
+
+
+#список док.  по id пользователя
+GET http://localhost:8080/users/1/documents
+
+###
+
+
+
+
+
+
+
+
+
 
 # Удалить пользователя - НЕ РЕАЛИЗОВАНО
 DELETE http://localhost:8080/users/delete/2

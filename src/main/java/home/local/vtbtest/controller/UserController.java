@@ -1,6 +1,8 @@
 package home.local.vtbtest.controller;
 
+import home.local.vtbtest.dto.DocumentDto;
 import home.local.vtbtest.dto.UserDto;
+import home.local.vtbtest.entity.Document;
 import home.local.vtbtest.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +28,11 @@ public class UserController {
     @GetMapping("/all")
     List<UserDto> readAll()  {
         return userService.getAll();
-              /*  .map( user -> ResponseEntity.ok(user))
-                .orElseGet( () -> ResponseEntity.notFound().build() );*/
+    }
+
+    @GetMapping("{id}/documents")
+    List<DocumentDto> getDocuments(@PathVariable Long id)  {
+        return userService.getDocuments(id);
     }
 
     @PostMapping("/create")
@@ -35,10 +40,10 @@ public class UserController {
         final Long saveUserId = userService.saveUser(user);
         return ResponseEntity.ok(saveUserId);
     }
-
+/*
     @PostMapping("/auth")
     ResponseEntity<Boolean> auth(@RequestBody UserDto user)  {
         return ResponseEntity.ok(userService.auth(user));
-    }
+    }*/
 
 }

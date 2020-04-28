@@ -24,7 +24,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class Document extends AbstractEntity{
-    private Integer docNumber;
+    private String docNumber;
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false)
     private Client client;

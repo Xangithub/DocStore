@@ -51,7 +51,11 @@ public class DocumentController {
     @PostMapping("/create")
     ResponseEntity<Long> save(@RequestPart("document") DocumentDto document, MultipartFile file) {
         try {
-        return  ResponseEntity.ok(documentService.save(document, file));
+            final Long idDoc = documentService.save(document, file);
+            if (idDoc == null) {
+                return ResponseEntity.notFound().build();
+            } else
+            return  ResponseEntity.ok(idDoc);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

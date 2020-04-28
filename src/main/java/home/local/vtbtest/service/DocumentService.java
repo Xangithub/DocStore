@@ -25,10 +25,6 @@ public class DocumentService {
 
 
     public Long save(DocumentDto documentDto, MultipartFile multipartFile) throws Exception {
-        //логика сохранения документов
-//        1. Проверить, что все связи существуют User, Client
-//        2. Сохранить файл и получить fileId
-//        3. Сохранить док. и вернуть его id
         final Long clientId = documentDto.getClientId();
         final Long userId = documentDto.getUserId();
         clientService.findOne(clientId).orElseThrow(() -> new Exception("клиент с id= " + clientId + "отсутствует"));
@@ -38,6 +34,7 @@ public class DocumentService {
         if (file == null) {
             return  null;
         }
+        documentDto.setFileId(file.getId());
         Document document = documentMapper.toEntity(documentDto);
         document = documentRepository.save(document);
         return document.getId();
