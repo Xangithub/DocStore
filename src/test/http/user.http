@@ -1,5 +1,4 @@
 # Прочитать всех клиентов
-## подготовка базы INSERT INTO "USER"("ID","CREATED","UPDATED","FULL_NAME","LOGIN","PASS_HASH")VALUES(1,NOW(),NOW(),'Fuu22l','Lala2l','rara2');
 GET http://localhost:8080/users/all
 
 ###

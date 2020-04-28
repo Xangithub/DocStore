@@ -12,6 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+/***
+        ·         Размещение (метаданные + файл)
+
+        ·         Получение метаданных
+
+        ·         Получение файла
+
+        ·         Удаление
+ */
 
 @Controller
 public class FileController {
