@@ -1,5 +1,6 @@
 package home.local.vtbtest.storage;
 
+import home.local.vtbtest.entity.File;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,7 +10,7 @@ import java.util.Map;
 public interface StorageService {
     void init();
 
-    void store(MultipartFile file);
+    File store(MultipartFile file);
 
     Map<Long, Path> loadAll();
 

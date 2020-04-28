@@ -36,7 +36,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Transactional(rollbackFor = {IOException.class})
     @Override
-    public void store(MultipartFile multipartFile) {
+    public File store(MultipartFile multipartFile) {
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         final long fileSize = multipartFile.getSize();
 
@@ -49,11 +49,13 @@ public class StorageServiceImpl implements StorageService {
                     "Cannot store file with relative path outside current directory "
                             + filename);
         }
+        File file = null;
         if (fileSize > MAX_FILE_SIZE) { //кладём файл в ФС
             try (InputStream inputStream = multipartFile.getInputStream()){
                 final String key = generateKey(filename);
                 Files.copy(inputStream, this.rootLocation.resolve(key));
-                final File file = new File().
+
+                file = new File().
                         setFileName(filename).
                         setFileKey(key);
                 fileRepository.save(file);
@@ -63,7 +65,7 @@ public class StorageServiceImpl implements StorageService {
 
         } else { //кладём файл в базу
             try {
-                final File file = new File().
+                file = new File().
                         setData(multipartFile.getBytes()).
                         setFileName(filename);
                 fileRepository.save(file);
@@ -71,6 +73,7 @@ public class StorageServiceImpl implements StorageService {
                 e.printStackTrace();
             }
         }
+        return file;
     }
 
 

@@ -1,12 +1,15 @@
 package home.local.vtbtest.controller;
 
+import home.local.vtbtest.dto.ClientDto;
 import home.local.vtbtest.entity.Client;
+import home.local.vtbtest.mapper.ClientMapper;
 import home.local.vtbtest.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/clients")
@@ -14,6 +17,7 @@ import java.util.List;
 public class ClientController {
 
    private final ClientService clientService;
+   private final ClientMapper clientMapper;
 
     @GetMapping("/all")
     List<Client> readAll() {
@@ -21,8 +25,9 @@ public class ClientController {
     }
 
     @GetMapping("/client/{id}")
-    Client readOne(@PathVariable Long id) throws Exception {
-        return clientService.findOne(id);
+    Optional<ClientDto> readOne(@PathVariable Long id) throws Exception {
+        final Optional<Client> clientOpt = clientService.findOne(id);
+         return clientOpt.map(client -> clientMapper.toDto(client));
     }
 
     @GetMapping("/client/inn/{inn}")

@@ -4,9 +4,13 @@ import home.local.vtbtest.dto.UserDto;
 import home.local.vtbtest.entity.User;
 import home.local.vtbtest.mapper.UserMapper;
 import home.local.vtbtest.repository.UserRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -15,10 +19,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public Optional<UserDto> getUser(Long id) {
         final Optional<User> optUser = userRepository.findById(id);
@@ -39,13 +44,17 @@ public class UserService {
 
     public Boolean auth(UserDto user) {
         @NotNull final String login = user.getLogin();
-        final Optional<User> userOpt = userRepository.findByLogin(login);
+        final Optional<User> userOpt = userRepository.findByUsername(login);
         if (userOpt.isPresent()) {
-            final String passFromBase = userOpt.get().getPassHash();
+            final String passFromBase = userOpt.get().getPassword();
             if (passFromBase == null) return false;
-            final String passFromDto = DigestUtils.md5DigestAsHex(user.getPass().getBytes());
-            return passFromBase.equals(passFromDto);
+            return  passwordEncoder.matches(user.getPass(), passFromBase);
         }
         return false;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
+     return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
     }
 }

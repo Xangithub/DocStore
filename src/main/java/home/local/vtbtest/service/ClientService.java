@@ -22,8 +22,9 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Client findOne(Long id) throws Exception {
-        return clientRepository.findById(id).orElseThrow(() -> new Exception("клиент с id= " + id + "отсутствует"));
+    public Optional<Client> findOne(Long id) {
+//        return clientRepository.findById(id).orElseThrow(() -> new Exception("клиент с id= " + id + "отсутствует"));
+        return clientRepository.findById(id);
     }
 
     public Client save(Client client) {

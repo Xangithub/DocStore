@@ -15,8 +15,7 @@ Content-Type: application/json; charset=utf-8;
     "number": "123",
     "docDate": "2111-11-02",
     "clientId": 1,
-    "userId": 3,
-    "fileId": 1
+    "userId": 3
 
  }
 

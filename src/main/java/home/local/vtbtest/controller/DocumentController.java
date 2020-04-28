@@ -49,9 +49,12 @@ public class DocumentController {
     }
 
     @PostMapping("/create")
-    ResponseEntity<DocumentDto> save(@RequestPart("document") DocumentDto document, MultipartFile file) {
-        documentService.save(document, file);
-        return null;
+    ResponseEntity<Long> save(@RequestPart("document") DocumentDto document, MultipartFile file) {
+        try {
+        return  ResponseEntity.ok(documentService.save(document, file));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/delete/{id}")

@@ -27,7 +27,7 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
         mapper.createTypeMap(User.class, UserDto.class)
                 .addMappings(m -> m.skip(UserDto::setPass)).setPostConverter(toDtoConverter());
         mapper.createTypeMap(UserDto.class, User.class)
-                .addMappings(m -> m.skip(User::setPassHash)).setPostConverter(toEntityConverter());
+                .addMappings(m -> m.skip(User::setPassword)).setPostConverter(toEntityConverter());
     }
 
     @Override
@@ -38,6 +38,6 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
     void mapSpecificFields(UserDto source, User destination) {
         @NotNull final String pass = source.getPass();
         final String passHash = DigestUtils.md5DigestAsHex(pass.getBytes());
-        destination.setPassHash(passHash);
+        destination.setPassword(passHash);
     }
 }
