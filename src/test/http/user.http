@@ -9,8 +9,8 @@ POST http://localhost:8080/users/create
 Content-Type: application/json; charset=utf-8;
 
 {
-  "login": "Из запроса1",
-  "pass": "PassOdered1",
+  "username": "roma",
+  "password": "pass",
   "fullName": "Moe polnoe imya1"
 }
 
@@ -19,8 +19,8 @@ POST http://localhost:8080/users/create
 Content-Type: application/json; charset=utf-8;
 
 {
-  "login": "Из запроса2",
-  "pass": "PassOdered2",
+  "username": "Из запроса2",
+  "password": "PassOdered2",
   "fullName": "Moe polnoe imya22"
 }
 ###

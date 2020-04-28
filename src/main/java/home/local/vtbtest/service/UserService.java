@@ -32,6 +32,11 @@ public class UserService implements UserDetailsService {
 
     public Long saveUser(UserDto userDto) {
         final User user = userMapper.toEntity(userDto);
+        user
+                .setAccountNonExpired(true)
+                .setAccountNonLocked(true)
+                .setEnabled(true)
+                .setCredentialsNonExpired(true);
         final User savedUser = userRepository.save(user);
         return savedUser.getId();
     }
@@ -43,12 +48,12 @@ public class UserService implements UserDetailsService {
     }
 
     public Boolean auth(UserDto user) {
-        @NotNull final String login = user.getLogin();
+        @NotNull final String login = user.getUsername();
         final Optional<User> userOpt = userRepository.findByUsername(login);
         if (userOpt.isPresent()) {
             final String passFromBase = userOpt.get().getPassword();
             if (passFromBase == null) return false;
-            return  passwordEncoder.matches(user.getPass(), passFromBase);
+            return  passwordEncoder.matches(user.getPassword(), passFromBase);
         }
         return false;
     }

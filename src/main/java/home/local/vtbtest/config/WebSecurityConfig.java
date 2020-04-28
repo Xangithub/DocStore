@@ -14,23 +14,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     UserDetailsService userService;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      /*  http
+        http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/users/auth").permitAll()
+                .antMatchers("/h2-console","/h2-console/**","/users/auth","/users/create").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
                 .and()
-                .logout()
-                .permitAll();*/
+                .logout().permitAll()
+                .and()
+                .httpBasic()
+        ;
+        http.headers().frameOptions().disable();
     }
-
 
     @Bean
     public PasswordEncoder bcryptPasswordEncoder() {

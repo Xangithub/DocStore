@@ -23,9 +23,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class UserDto extends AbstractDto{
     @NotNull
-    String login;
+    String username;
     @NotNull
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    String pass;
+    String password;
     String fullName;
 }
