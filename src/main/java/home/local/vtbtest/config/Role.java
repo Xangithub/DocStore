@@ -1,4 +1,4 @@
-package home.local.vtbtest.service;
+package home.local.vtbtest.config;
 
 import org.springframework.security.core.GrantedAuthority;
 

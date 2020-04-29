@@ -6,7 +6,7 @@
 </div>
 
 <div>
-    <form method="POST" enctype="multipart/form-data" action="/">
+    <form method="POST" enctype="multipart/form-data" action="/files/upload">
         <table>
             <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
             <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
@@ -17,7 +17,7 @@
 <div>
     <ul>
         <li th:each="file : ${files}">
-            <a th:href="'files/'+ ${file.getKey()}" th:text="${file.getValue()}" />
+            <a th:href="${file.getKey()}" th:text="${file.getValue()}" />
         </li>
     </ul>
 </div>

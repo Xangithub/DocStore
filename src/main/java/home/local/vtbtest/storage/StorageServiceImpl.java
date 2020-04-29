@@ -77,27 +77,9 @@ public class StorageServiceImpl implements StorageService {
     }
 
 
-   /* public Stream<Path> loadAll() {
-        try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(this.rootLocation::relativize);
-        } catch (IOException e) {
-            throw new StorageException("Failed to read stored files", e);
-        }
-
-    } */
-
     @Override
     public Map<Long, Path> loadAll() {
-    /*    try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(this.rootLocation::relativize);
-        } catch (IOException e) {
-            throw new StorageException("Failed to read stored files", e);
-        }*/
-        final Map<Long, Path> all= new HashMap<>();
+         final Map<Long, Path> all= new HashMap<>();
         final Iterable<File> fileRepositoryAll = fileRepository.findAll();
         fileRepositoryAll.forEach(file -> all.put(file.getId(),Paths.get(file.getFileName())));
         return  all;

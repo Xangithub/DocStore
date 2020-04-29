@@ -1,5 +1,7 @@
 # Прочитать всех клиентов
 GET http://localhost:8080/users/all
+Content-Type: application/json; charset=utf-8;
+Authorization: Basic eGFuOnBhc3M=
 
 ###
 
@@ -8,7 +10,7 @@ POST http://localhost:8080/users/create
 Content-Type: application/json; charset=utf-8;
 
 {
-  "username": "roma",
+  "username": "xan",
   "password": "pass",
   "fullName": "Moe polnoe imya1"
 }
@@ -26,13 +28,14 @@ Content-Type: application/json; charset=utf-8;
 
 #получения по id
 GET http://localhost:8080/users/read/2
-
+Authorization: Basic eGFuOnBhc3M=
 
 ###
 
 #Проверка взятия документов - создали клиента
 POST http://localhost:8080/clients/create
 Content-Type: application/json; charset=utf-8;
+Authorization: Basic eGFuOnBhc3M=
 
 
 {
@@ -69,19 +72,6 @@ Content-Disposition: form-data; name="file"; filename="sample.dat"
 
 #список док.  по id пользователя
 GET http://localhost:8080/users/1/documents
-
+Authorization: Basic eGFuOnBhc3M=
 ###
 
-
-
-
-
-
-
-
-
-
-# Удалить пользователя - НЕ РЕАЛИЗОВАНО
-DELETE http://localhost:8080/users/delete/2
-
-###

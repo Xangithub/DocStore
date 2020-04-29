@@ -35,11 +35,11 @@ public class UserService implements UserDetailsService {
 
     public Long saveUser(UserDto userDto) {
         final User user = userMapper.toEntity(userDto);
-        user
+       /* user
                 .setAccountNonExpired(true)
                 .setAccountNonLocked(true)
                 .setEnabled(true)
-                .setCredentialsNonExpired(true);
+                .setCredentialsNonExpired(true);*/
         final User savedUser = userRepository.save(user);
         return savedUser.getId();
     }
@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " was not found!")); //String.format("Username [%username] not found")
     }
 
     public List<DocumentDto> getDocuments(Long userId) {

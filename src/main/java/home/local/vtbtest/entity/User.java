@@ -1,16 +1,12 @@
 package home.local.vtbtest.entity;
 
-import home.local.vtbtest.service.Role;
+import home.local.vtbtest.config.Role;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.List;
 
 /***
@@ -22,7 +18,6 @@ import java.util.List;
 */
 
 @Entity
-@RequiredArgsConstructor
 @Accessors(chain = true)
 @Setter
 @Getter
@@ -35,11 +30,18 @@ public class User extends AbstractEntity implements UserDetails
     String fullName;
     @OneToMany(mappedBy = "user" )
     List<Document> documentList;
-//    @OneToMany(mappedBy = )
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Role> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
+
+    public User() {
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
+    }
 }

@@ -12,17 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-/***
-        ·         Размещение (метаданные + файл)
 
-        ·         Получение метаданных
-
-        ·         Получение файла
-
-        ·         Удаление
- */
 
 @Controller
+@RequestMapping("/files")
 public class FileController {
     private final StorageService storageService;
     public FileController(StorageService storageService) {
@@ -38,16 +31,16 @@ public class FileController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }*/
 
-    @GetMapping("/files/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFileId(@PathVariable Long id) {
+    public ResponseEntity<Resource> getFileById(@PathVariable Long id) {
 
         Resource file = storageService.loadAsResource(id);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getDescription() + "\"").body(file);
     }
 
-    @GetMapping("/files")
+    @GetMapping("/list")
     public String listUploadedFiles(Model model) throws IOException {
 
         /*    model.addAttribute("files", storageService.loadAll().stream().map(
@@ -58,7 +51,7 @@ public class FileController {
         return "uploadForm";
     }
 
-    @PostMapping("/")
+    @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
 
@@ -66,13 +59,13 @@ public class FileController {
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/";
+        return "redirect:/files/list";
     }
 
-    @DeleteMapping("/files/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteFile(@PathVariable Integer id) {
         storageService.delete(id);
-        return "redirect:/";
+        return "redirect:/files/list";
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

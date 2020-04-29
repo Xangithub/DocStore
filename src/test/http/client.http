@@ -21,8 +21,8 @@ Content-Type: application/json; charset=utf-8;
 
 
  {
-    "name": "ООО Моя 22",
-    "inn": "112222",
+    "name": "ООО Моя 32",
+    "inn": "112223",
     "ogrn": "33333"
  }
 ###
