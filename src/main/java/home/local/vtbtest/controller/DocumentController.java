@@ -29,7 +29,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/documents")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
 public class DocumentController {
 
    private final DocumentRepository documentRepository;
@@ -41,12 +40,12 @@ public class DocumentController {
         return documentService.findAll();
     }
 
-    @GetMapping("/document/{id}")
+    @GetMapping("/{id}")
     Document readOne(@PathVariable Long id)  {
         return documentService.getDocument(id);
     }
 
-    @GetMapping(value = "/document/{id}/file", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/{id}/file", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     ResponseEntity<Resource> getFileFromDoc(@PathVariable Long id)  {
         final Document doc = documentService.getDocument(id);
         final File file = doc.getFile();
@@ -69,7 +68,7 @@ public class DocumentController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     void delete(@PathVariable Long id) throws Exception {
         documentService.deleteById(id);
     }

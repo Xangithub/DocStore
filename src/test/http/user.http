@@ -48,6 +48,7 @@ Authorization: Basic eGFuOnBhc3M=
 # Создание документа
 POST http://localhost:8080/documents/create
 Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Basic eGFuOnBhc3M=
 
 --WebAppBoundary
 Content-Disposition: form-data; name="document"

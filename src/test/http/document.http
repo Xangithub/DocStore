@@ -28,13 +28,9 @@ Content-Disposition: form-data; name="file"; filename="sample.dat"
 ###
 
 # Удалить клиента
-DELETE http://localhost:8080/documents/delete/3
+DELETE http://localhost:8080/documents/3
 
 ###
 
 #
-String number
-Integer clientId
-Integer fileId
-LocalDate docDate
-Integer userId
+
