@@ -3,9 +3,12 @@ package home.local.vtbtest.controller;
 import home.local.vtbtest.dto.DocumentDto;
 import home.local.vtbtest.dto.UserDto;
 import home.local.vtbtest.entity.Document;
+import home.local.vtbtest.entity.User;
 import home.local.vtbtest.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +31,19 @@ public class UserController {
     @GetMapping("/all")
     List<UserDto> readAll()  {
         return userService.getAll();
+    }
+
+    @GetMapping("/profile")
+    ResponseEntity<UserDto> getCurrentUserProfile() {
+        final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            final Long id = ((User) principal).getId();
+            return userService.getUser(id)
+                    .map( user -> ResponseEntity.ok(user))
+                    .orElseGet( () -> ResponseEntity.notFound().build() );
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("{id}/documents")

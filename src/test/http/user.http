@@ -76,3 +76,9 @@ GET http://localhost:8080/users/1/documents
 Authorization: Basic eGFuOnBhc3M=
 ###
 
+
+#Вывести профиль тек. пользователя
+GET http://localhost:8080/users/profile
+Authorization: Basic eGFuOnBhc3M=
+###
+
