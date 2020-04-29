@@ -8,6 +8,7 @@ import home.local.vtbtest.mapper.ClientMapper;
 import home.local.vtbtest.mapper.DocumentMapper;
 import home.local.vtbtest.repository.ClientRepository;
 import home.local.vtbtest.repository.DocumentRepository;
+import home.local.vtbtest.util.SearchCriteria;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,8 @@ public class ClientService {
         return clientRepository.findById(id).map(client -> clientMapper.toDto(client));
     }
 
-    public Client save(Client client) {
+    public Client save(ClientDto clientDto) {
+        final Client client = clientMapper.toEntity(clientDto);
         return clientRepository.save(client);
     }
 
@@ -57,4 +59,14 @@ public class ClientService {
         Long id= clientByInn.isPresent() ? clientByInn.get().getId() : null;
         return id;
     }
+
+    public List<ClientDto> searchClient(List<SearchCriteria> params) {
+        return null;
+    }
+
+  /*  public Client update(ClientDto clientDto) {
+        final Client client = clientMapper.toEntity(clientDto);
+        clientRepository.save(client);
+        return client;
+    }*/
 }

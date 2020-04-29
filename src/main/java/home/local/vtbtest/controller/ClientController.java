@@ -5,12 +5,16 @@ import home.local.vtbtest.dto.DocumentDto;
 import home.local.vtbtest.entity.Client;
 import home.local.vtbtest.entity.Document;
 import home.local.vtbtest.service.ClientService;
+import home.local.vtbtest.util.SearchCriteria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /***
  CRUD операции (удаление возможно только если нет размещённых документов)
@@ -27,15 +31,29 @@ public class ClientController {
 
     private final ClientService clientService;
 
+    @GetMapping("/search")
+    public List<ClientDto> findAll(@RequestParam(value = "search", required = false) String search) {
+        List<SearchCriteria> params = new ArrayList<>();
+        if (search != null) {
+            Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
+            Matcher matcher = pattern.matcher(search + ",");
+            while (matcher.find()) {
+                params.add(new SearchCriteria(matcher.group(1),
+                        matcher.group(2), matcher.group(3)));
+            }
+        }
+        return clientService.searchClient(params);
+    }
+
 
     @PostMapping("/create")
-    Client create(@RequestBody Client client) {
-        return clientService.save(client);
+    Client create(@RequestBody ClientDto clientDto) {
+        return clientService.save(clientDto);
     }
 
     @PostMapping("/update")
-    Client update(@RequestBody Client client) {
-        return clientService.save(client);
+    Client update(@RequestBody ClientDto clientDto) {
+        return clientService.save(clientDto);
     }
 
     @GetMapping("/all")
@@ -43,9 +61,9 @@ public class ClientController {
         return clientService.findAll();
     }
 
-    @GetMapping("/client/{id}")
+    @GetMapping("/{id}")
     Optional<ClientDto> readOne(@PathVariable Long id) {
-        return clientService.findOne(id); //todo проверить стоит ли возвращать опшенал
+        return clientService.findOne(id);
     }
 
     @GetMapping("/{id}/docs")

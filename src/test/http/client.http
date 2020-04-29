@@ -28,6 +28,13 @@ Content-Type: application/json; charset=utf-8;
  }
 ###
 
+# Прочитать клиента с ID 1
+GET http://localhost:8080/clients/4
+Authorization: Basic eGFuOnBhc3M=
+
+###
+
+
 # Удалить клиента
 DELETE http://localhost:8080/clients/delete/5
 
