@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Base64;
+
 import java.util.Collections;
 
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;

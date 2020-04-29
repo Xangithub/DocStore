@@ -1,5 +1,6 @@
 # Прочитать всех клиентов
 GET http://localhost:8080/clients/all
+Authorization: Basic eGFuOnBhc3M=
 
 ###
 
@@ -28,6 +29,6 @@ Content-Type: application/json; charset=utf-8;
 ###
 
 # Удалить клиента
-DELETE http://localhost:8080/clients/delete/3
+DELETE http://localhost:8080/clients/delete/5
 
 ###

@@ -1,9 +1,11 @@
 package home.local.vtbtest.service;
 
 import home.local.vtbtest.dto.ClientDto;
+import home.local.vtbtest.dto.DocumentDto;
 import home.local.vtbtest.entity.Client;
 import home.local.vtbtest.entity.Document;
 import home.local.vtbtest.mapper.ClientMapper;
+import home.local.vtbtest.mapper.DocumentMapper;
 import home.local.vtbtest.repository.ClientRepository;
 import home.local.vtbtest.repository.DocumentRepository;
 import lombok.NonNull;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +25,10 @@ public class ClientService {
     private DocumentRepository documentRepository;
 
     private final ClientMapper clientMapper;
+    private final DocumentMapper documentMapper;
 
-    public List<Client> findAll() {
-        return clientRepository.findAll();
+    public List<ClientDto> findAll() {
+        return clientRepository.findAll().stream().map(client -> clientMapper.toDto(client)).collect(Collectors.toList());
     }
 
     public Optional<ClientDto> findOne(Long id) {
@@ -33,18 +37,19 @@ public class ClientService {
     }
 
     public Client save(Client client) {
-        return clientRepository.saveAndFlush(client);
+        return clientRepository.save(client);
     }
 
-    public List<Document> getClientDocs(Long idClient) throws Exception {
+    public List<DocumentDto> getClientDocs(Long idClient) throws Exception {
         final Client client = clientRepository.findById(idClient).orElseThrow(() -> new Exception("клиент с id= " + idClient + "отсутствует"));
         final List<Document> documentRepositoryAllByClient = documentRepository.findAllByClient(client);
-        return documentRepositoryAllByClient;
+        return  documentRepositoryAllByClient.stream().map(document -> documentMapper.toDto(document)).collect(Collectors.toList());
     }
 
     public void delete(Long idClient) throws Exception {
-        final List<Document> documentList = getClientDocs(idClient);
-        if(documentList.isEmpty())  clientRepository.deleteById(idClient);
+        final Client client = clientRepository.findById(idClient).orElseThrow(() -> new Exception("клиент с id= " + idClient + "отсутствует"));
+        final List<Document> documentRepositoryAllByClient = documentRepository.findAllByClient(client);
+        if(documentRepositoryAllByClient.isEmpty())  clientRepository.deleteById(idClient);
     }
 
     public Long idByInn(String inn) {

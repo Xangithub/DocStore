@@ -1,6 +1,7 @@
 package home.local.vtbtest.controller;
 
 import home.local.vtbtest.dto.ClientDto;
+import home.local.vtbtest.dto.DocumentDto;
 import home.local.vtbtest.entity.Client;
 import home.local.vtbtest.entity.Document;
 import home.local.vtbtest.service.ClientService;
@@ -32,18 +33,23 @@ public class ClientController {
         return clientService.save(client);
     }
 
+    @PostMapping("/update")
+    Client update(@RequestBody Client client) {
+        return clientService.save(client);
+    }
+
     @GetMapping("/all")
-    List<Client> readAll() {
+    List<ClientDto> readAll() {
         return clientService.findAll();
     }
 
     @GetMapping("/client/{id}")
     Optional<ClientDto> readOne(@PathVariable Long id) {
-        return clientService.findOne(id);
+        return clientService.findOne(id); //todo проверить стоит ли возвращать опшенал
     }
 
     @GetMapping("/{id}/docs")
-    List<Document> getClientDocs(@PathVariable Long id) throws Exception {
+    List<DocumentDto> getClientDocs(@PathVariable Long id) throws Exception {
         return clientService.getClientDocs(id);
     }
 
