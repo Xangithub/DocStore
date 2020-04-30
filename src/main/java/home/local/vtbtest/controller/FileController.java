@@ -63,7 +63,7 @@ public class FileController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteFile(@PathVariable Integer id) {
+    public String deleteFile(@PathVariable Long id) {
         storageService.delete(id);
         return "redirect:/files/list";
     }

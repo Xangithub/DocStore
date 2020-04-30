@@ -55,7 +55,7 @@ Content-Disposition: form-data; name="document"
 Content-Type: application/json; charset=utf-8;
 
  {
-    "number": "123",
+    "docnumber": "123",
     "docDate": "2111-11-02",
     "clientId": 3,
     "userId": 1

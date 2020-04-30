@@ -1,8 +1,6 @@
 package home.local.vtbtest.controller;
 
 import home.local.vtbtest.dto.DocumentDto;
-import home.local.vtbtest.entity.Document;
-import home.local.vtbtest.entity.File;
 import home.local.vtbtest.repository.DocumentRepository;
 import home.local.vtbtest.service.DocumentService;
 import home.local.vtbtest.storage.StorageService;
@@ -31,26 +29,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DocumentController {
 
-   private final DocumentRepository documentRepository;
-   private final DocumentService documentService;
-   private final StorageService storageService;
+    private final DocumentRepository documentRepository;
+    private final DocumentService documentService;
+    private final StorageService storageService;
 
     @GetMapping("/all")
-    List<Document> readAll() {
+    List<DocumentDto> readAll() {
         return documentService.findAll();
     }
 
     @GetMapping("/{id}")
-    Document readOne(@PathVariable Long id)  {
-        return documentService.getDocument(id);
+    ResponseEntity<DocumentDto> readOne(@PathVariable Long id) {
+        DocumentDto documentDto;
+        try {
+            documentDto = documentService.getDocument(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(documentDto);
     }
 
     @GetMapping(value = "/{id}/file", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    ResponseEntity<Resource> getFileFromDoc(@PathVariable Long id)  {
-        final Document doc = documentService.getDocument(id);
-        final File file = doc.getFile();
-
-        Resource r = storageService.loadAsResource(file.getId());
+    ResponseEntity<Resource> getFileFromDoc(@PathVariable Long id) {
+        final DocumentDto docDto;
+        try {
+            docDto = documentService.getDocument(id);
+        } catch (Exception e) {
+           return ResponseEntity.notFound().build();
+        }
+        Resource r = storageService.loadAsResource(docDto.getFileId());
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + r.getDescription() + "\"").body(r);
     }
@@ -62,7 +69,7 @@ public class DocumentController {
             if (idDoc == null) {
                 return ResponseEntity.notFound().build();
             } else
-            return  ResponseEntity.ok(idDoc);
+                return ResponseEntity.ok(idDoc);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

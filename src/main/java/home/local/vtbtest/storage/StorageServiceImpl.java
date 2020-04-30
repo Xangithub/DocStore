@@ -139,8 +139,20 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void delete(Integer id) {
-//        FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    public void delete(Long id) {
+        final Optional<File> fileOpt = fileRepository.findById(id);
+        if (fileOpt.isPresent()) {
+            final File file = fileOpt.get();
+            if(file.getData().length==0) {
+                try {
+                    FileSystemUtils.deleteRecursively(rootLocation.resolve(file.getFileKey()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                fileRepository.deleteById(id);
+            }
+        }
     }
 
     @Override

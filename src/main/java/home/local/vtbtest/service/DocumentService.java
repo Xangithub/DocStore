@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,15 +45,22 @@ public class DocumentService {
         documentRepository.deleteAll();
     }
 
-    public Document getDocument(Long id) {
-        return documentRepository.getOne(id);
+    public DocumentDto getDocument(Long id) throws Exception {
+        final Document document;
+        try {
+            document = documentRepository.getOne(id);
+        } catch (Exception e) {
+            throw new Exception("Документ с id= " + id + "отсутствует");
+        }
+        return documentMapper.toDto(document);
     }
 
-    public List<Document> findAll() {
-        return documentRepository.findAll();
+    public List<DocumentDto> findAll() {
+        return  documentRepository.findAll().stream().map(document -> documentMapper.toDto(document)).collect(Collectors.toList());
     }
 
     public void deleteById(Long id) {
         documentRepository.deleteById(id);
+        storageService.delete(id);
     }
 }
