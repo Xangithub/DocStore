@@ -4,6 +4,7 @@ import home.local.vtbtest.dto.ClientDto;
 import home.local.vtbtest.dto.DocumentDto;
 import home.local.vtbtest.entity.Client;
 import home.local.vtbtest.entity.Document;
+import home.local.vtbtest.exception.EntityWithIdNotFound;
 import home.local.vtbtest.mapper.ClientMapper;
 import home.local.vtbtest.mapper.DocumentMapper;
 import home.local.vtbtest.repository.ClientRepository;
@@ -14,6 +15,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,8 +39,7 @@ public class ClientService {
         return clientRepository.findAll().stream().map(client -> clientMapper.toDto(client)).collect(Collectors.toList());
     }
 
-    public Optional<ClientDto> findOne(Long id) {
-//        return clientRepository.findById(id).orElseThrow(() -> new Exception("клиент с id= " + id + "отсутствует"));
+    public Optional<ClientDto> findOne(@NotNull Long id) {
         return clientRepository.findById(id).map(client -> clientMapper.toDto(client));
     }
 
@@ -47,22 +48,16 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
-    public List<DocumentDto> getClientDocs(Long idClient) throws Exception {
-        final Client client = clientRepository.findById(idClient).orElseThrow(() -> new Exception("клиент с id= " + idClient + "отсутствует"));
+    public List<DocumentDto> getClientDocs(Long idClient) throws EntityWithIdNotFound {
+        final Client client = clientRepository.findById(idClient).orElseThrow(() -> new EntityWithIdNotFound("клиент с id= " + idClient + " отсутствует"));
         final List<Document> documentRepositoryAllByClient = documentRepository.findAllByClient(client);
         return documentRepositoryAllByClient.stream().map(document -> documentMapper.toDto(document)).collect(Collectors.toList());
     }
 
-    public void delete(Long idClient) throws Exception {
-        final Client client = clientRepository.findById(idClient).orElseThrow(() -> new Exception("клиент с id= " + idClient + "отсутствует"));
+    public void delete(Long idClient) throws EntityWithIdNotFound {
+        final Client client = clientRepository.findById(idClient).orElseThrow(() -> new EntityWithIdNotFound("клиент с id= " + idClient + " отсутствует"));
         final List<Document> documentRepositoryAllByClient = documentRepository.findAllByClient(client);
         if (documentRepositoryAllByClient.isEmpty()) clientRepository.deleteById(idClient);
-    }
-
-    public Long idByInn(String inn) {
-        final Optional<Client> clientByInn = clientRepository.findByInn(inn);
-        Long id = clientByInn.isPresent() ? clientByInn.get().getId() : null;
-        return id;
     }
 
     public List<ClientDto> searchClient(List<SearchCriteria> params) {

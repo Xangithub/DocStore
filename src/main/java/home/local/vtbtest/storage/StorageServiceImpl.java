@@ -1,6 +1,7 @@
 package home.local.vtbtest.storage;
 
 import home.local.vtbtest.entity.File;
+import home.local.vtbtest.exception.StorageException;
 import home.local.vtbtest.repository.FileRepository;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -27,7 +28,8 @@ public class StorageServiceImpl implements StorageService {
     private final Path rootLocation;
     private FileRepository fileRepository;
 
-    final static long MAX_FILE_SIZE = 10 * 1024 * 1024;
+    static final long MAX_FILE_SIZE = 10L * 1024 * 1024;
+    static final String CANT_READ_FILE = "Could not read file: ";
 
     public StorageServiceImpl(StorageProperties properties, FileRepository fileRepository) {
         this.rootLocation = Paths.get(properties.getLocation());
@@ -97,6 +99,7 @@ public class StorageServiceImpl implements StorageService {
         final File file = fileById.orElseThrow(() -> new StorageFileNotFoundException("Could not read file with id " + fileById));
         if(file.getData()==null){
 
+
             try {
                 Path pathFile = load(file.getFileKey());
                 if (Files.exists(pathFile) || Files.isReadable(pathFile)) {
@@ -104,10 +107,10 @@ public class StorageServiceImpl implements StorageService {
 
                 } else {
                     throw new StorageFileNotFoundException(
-                            "Could not read file: " + file.getFileName());
+                            CANT_READ_FILE + file.getFileName());
                 }
             } catch (IOException e) {
-                throw new StorageFileNotFoundException("Could not read file: " + file.getFileName(), e);
+                throw new StorageFileNotFoundException(CANT_READ_FILE + file.getFileName(), e);
             }
         } else {
             return new ByteArrayResource(file.getData(),file.getFileName());
@@ -123,11 +126,11 @@ public class StorageServiceImpl implements StorageService {
                 return resource;
             } else {
                 throw new StorageFileNotFoundException(
-                        "Could not read file: " + filename);
+                        CANT_READ_FILE + filename);
 
             }
         } catch (MalformedURLException e) {
-            throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+            throw new StorageFileNotFoundException(CANT_READ_FILE + filename, e);
         }
     }
 
@@ -147,7 +150,7 @@ public class StorageServiceImpl implements StorageService {
                 try {
                     FileSystemUtils.deleteRecursively(rootLocation.resolve(file.getFileKey()));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); //todo подключить логгер
                 }
             } else {
                 fileRepository.deleteById(id);

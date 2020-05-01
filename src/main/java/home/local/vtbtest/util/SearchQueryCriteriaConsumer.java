@@ -10,10 +10,10 @@ import java.util.function.Consumer;
 
 @Getter
 @AllArgsConstructor
-public class ClientSearchQueryCriteriaConsumer implements Consumer<SearchCriteria> {
+public class SearchQueryCriteriaConsumer<T> implements Consumer<SearchCriteria> {
     private Predicate predicate;
     private CriteriaBuilder builder;
-    private Root r;
+    private Root<T> r;
 
     @Override
     public void accept(SearchCriteria param) {

@@ -1,5 +1,7 @@
 package home.local.vtbtest.storage;
 
+import home.local.vtbtest.exception.StorageException;
+
 public class StorageFileNotFoundException extends StorageException {
 
     public StorageFileNotFoundException(String message) {

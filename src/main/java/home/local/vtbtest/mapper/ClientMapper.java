@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,14 +35,13 @@ public class ClientMapper extends AbstractMapper<Client, ClientDto> {
     @Override
     void mapSpecificFields(Client source, ClientDto destination) {
         final List<Document> documentsList = source.getDocumentsList();
-        destination.setDocumentsIdList(documentsList.stream().map(document -> document.getId()).collect(Collectors.toList()));
+        destination.setDocumentsIdList(documentsList.stream().map(Document::getId).collect(Collectors.toList()));
     }
 
     @Override
     void mapSpecificFields(ClientDto source, Client destination) {
         if (source.getDocumentsIdList() == null) {
             return;
-//            source.setDocumentsIdList(new ArrayList<>());
         }
         source.getDocumentsIdList().forEach(id -> {
             final Optional<Document> docOpt = documentRepository.findById(id);

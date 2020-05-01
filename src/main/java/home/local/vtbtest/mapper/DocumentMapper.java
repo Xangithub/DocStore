@@ -3,7 +3,6 @@ package home.local.vtbtest.mapper;
 import home.local.vtbtest.dto.DocumentDto;
 import home.local.vtbtest.entity.Document;
 import home.local.vtbtest.repository.ClientRepository;
-import home.local.vtbtest.repository.DocumentRepository;
 import home.local.vtbtest.repository.FileRepository;
 import home.local.vtbtest.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -20,7 +19,6 @@ public class DocumentMapper extends AbstractMapper<Document, DocumentDto> {
     private final UserRepository userRepository;
 
     DocumentMapper(ModelMapper mapper,
-                   DocumentRepository documentRepository,
                    ClientRepository clientRepository,
                    FileRepository fileRepository,
                    UserRepository userRepository
@@ -30,7 +28,6 @@ public class DocumentMapper extends AbstractMapper<Document, DocumentDto> {
         this.clientRepository = clientRepository;
         this.fileRepository = fileRepository;
         this.userRepository = userRepository;
-//        this.documentRepository = documentRepository;
     }
 
     @PostConstruct
@@ -59,7 +56,7 @@ public class DocumentMapper extends AbstractMapper<Document, DocumentDto> {
     @Override
     void mapSpecificFields(DocumentDto source, Document destination) {
         destination.setClient(clientRepository.getOne(source.getClientId()));
-        destination.setFile(fileRepository.findById(source.getFileId()).get());
+        destination.setFile(fileRepository.findById(source.getFileId()).orElse (null));
         destination.setUser(userRepository.getOne(source.getUserId()));
     }
 }

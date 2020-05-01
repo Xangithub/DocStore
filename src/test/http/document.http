@@ -1,4 +1,4 @@
-# Прочитать все
+# Прочитать все документы
 GET http://localhost:8080/documents/all
 Authorization: Basic eGFuOnBhc3M=
 
@@ -24,7 +24,7 @@ Content-Type: application/json; charset=utf-8;
 --WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="sample.dat"
 
-< D:/intel-lan/log/22.txt
+< D:/log/22.txt
 --WebAppBoundary--
 
 ###

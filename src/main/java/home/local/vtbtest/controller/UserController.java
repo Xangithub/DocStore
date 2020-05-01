@@ -20,19 +20,19 @@ public class UserController {
    private final UserService userService;
 
     @GetMapping("/read/{id}")
-    ResponseEntity<UserDto> read(@PathVariable Long id)  {
+    public ResponseEntity<UserDto> read(@PathVariable Long id)  {
         return userService.getUser(id)
                 .map( user -> ResponseEntity.ok(user))
                 .orElseGet( () -> ResponseEntity.notFound().build() );
     }
 
     @GetMapping("/all")
-    List<UserDto> readAll()  {
+    public List<UserDto> readAll()  {
         return userService.getAll();
     }
 
     @GetMapping("/profile")
-    ResponseEntity<UserDto> getCurrentUserProfile() {
+    public ResponseEntity<UserDto> getCurrentUserProfile() {
         final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof User) {
             final Long id = ((User) principal).getId();
@@ -45,12 +45,12 @@ public class UserController {
     }
 
     @GetMapping("{id}/documents")
-    List<DocumentDto> getDocuments(@PathVariable Long id)  {
+    public List<DocumentDto> getDocuments(@PathVariable Long id)  {
         return userService.getDocuments(id);
     }
 
     @PostMapping("/create")
-    ResponseEntity<Long> createUser(@RequestBody UserDto user)  {
+    public ResponseEntity<Long> createUser(@RequestBody UserDto user)  {
         final Long saveUserId = userService.saveUser(user);
         return ResponseEntity.ok(saveUserId);
     }

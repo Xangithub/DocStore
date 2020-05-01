@@ -35,34 +35,16 @@ public class UserService implements UserDetailsService {
 
     public Long saveUser(UserDto userDto) {
         final User user = userMapper.toEntity(userDto);
-       /* user
-                .setAccountNonExpired(true)
-                .setAccountNonLocked(true)
-                .setEnabled(true)
-                .setCredentialsNonExpired(true);*/
         final User savedUser = userRepository.save(user);
         return savedUser.getId();
     }
 
     public List<UserDto> getAll() {
-//        final List<UserDto> dtoList = new ArrayList<>();
-//        userRepository.findAll().forEach(user -> dtoList.add(userMapper.toDto(user)));
         return userRepository.findAll().stream().map(user -> userMapper.toDto(user)).collect(Collectors.toList());
     }
 
-/*    public Boolean auth(UserDto user) {
-        @NotNull final String login = user.getUsername();
-        final Optional<User> userOpt = userRepository.findByUsername(login);
-        if (userOpt.isPresent()) {
-            final String passFromBase = userOpt.get().getPassword();
-            if (passFromBase == null) return false;
-            return  passwordEncoder.matches(user.getPassword(), passFromBase);
-        }
-        return false;
-    }*/
-
     @Override
-    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(@NonNull String username)  {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " was not found!")); //String.format("Username [%username] not found")
     }
 
@@ -70,7 +52,6 @@ public class UserService implements UserDetailsService {
         final Optional<User> userOpt = userRepository.findById(userId);
         final User user = userOpt.orElseThrow(() -> new UsernameNotFoundException(userId + " was not found!"));
         final List<Document> userDocs = documentRepository.findAllByUser(user);
-        final List<DocumentDto> userDocsDto = userDocs.stream().map(document -> documentMapper.toDto(document)).collect(Collectors.toList());
-        return userDocsDto;
+        return userDocs.stream().map(document -> documentMapper.toDto(document)).collect(Collectors.toList());
     }
 }

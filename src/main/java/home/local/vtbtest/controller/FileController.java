@@ -22,15 +22,6 @@ public class FileController {
         this.storageService = storageService;
     }
 
-   /* @GetMapping("/files/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-
-        Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-    }*/
-
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Resource> getFileById(@PathVariable Long id) {

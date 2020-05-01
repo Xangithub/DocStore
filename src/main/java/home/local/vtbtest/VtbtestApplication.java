@@ -49,20 +49,20 @@ public class VtbtestApplication {
      */
     @Bean
     CommandLineRunner init(StorageService storageService, ClientRepository clientRepository, UserRepository userRepository, DocumentRepository documentRepository, FileRepository fileRepository) {
-        return (args) -> {
+        return args -> {
 
             final User xan = new User().setUsername("xan").setPassword("$2a$10$.SrZu447yxrGaoTiFP.Cn.MAvWLd4AH8ZdX2nSD/.Pvo8GAe9o02G").setAuthorities(Collections.singletonList(Role.USER)).setFullName("UserFullName");
             userRepository.save(xan);//pass
 
             userRepository.save(new User().setUsername("second").setPassword("$2a$10$.SrZu447yxrGaoTiFP.Cn.MAvWLd4AH8ZdX2nSD/.Pvo8GAe9o02G").setAuthorities(Collections.singletonList(Role.USER)).setFullName("UserFullName2"));//pass
 
-            final Client melkosoft = new Client().setInn("6587907086").setName("Melkosoft").setOgrn("5128459615972").setDocumentsList(Collections.EMPTY_LIST);
+            final Client melkosoft = new Client().setInn("6587907086").setName("Melkosoft").setOgrn("5128459615972").setDocumentsList(Collections.emptyList());
             clientRepository.save(melkosoft);
 
-            clientRepository.save(new Client().setInn("7946719033").setName("Oracle").setOgrn("1085611485200").setDocumentsList(Collections.EMPTY_LIST));
+            clientRepository.save(new Client().setInn("7946719033").setName("Oracle").setOgrn("1085611485200").setDocumentsList(Collections.emptyList()));
 
             final File ablaabla = new File().setFileKey("ablaabla").setFileName("pupsik.dat").setData("This DATA in file.".getBytes());
-//            fileRepository.save(ablaabla);
+
             fileRepository.save(new File().setFileKey("vvv").setFileName("zed.dat").setData("my win".getBytes()));
 
             documentRepository.save(new Document()
@@ -72,7 +72,6 @@ public class VtbtestApplication {
                     .setDocNumber("999")
                     .setFile(ablaabla)
             );
-
 
             storageService.init();
             storageService.deleteAll();

@@ -34,12 +34,12 @@ public class DocumentController {
     private final StorageService storageService;
 
     @GetMapping("/all")
-    List<DocumentDto> readAll() {
+    public List<DocumentDto> readAll() {
         return documentService.findAll();
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<DocumentDto> readOne(@PathVariable Long id) {
+    public ResponseEntity<DocumentDto> readOne(@PathVariable Long id) {
         DocumentDto documentDto;
         try {
             documentDto = documentService.getDocument(id);
@@ -50,7 +50,7 @@ public class DocumentController {
     }
 
     @GetMapping(value = "/{id}/file", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    ResponseEntity<Resource> getFileFromDoc(@PathVariable Long id) {
+    public ResponseEntity<Resource> getFileFromDoc(@PathVariable Long id) {
         final DocumentDto docDto;
         try {
             docDto = documentService.getDocument(id);
@@ -63,7 +63,7 @@ public class DocumentController {
     }
 
     @PostMapping("/create")
-    ResponseEntity<Long> save(@RequestPart("document") DocumentDto document, MultipartFile file) {
+    public ResponseEntity<Long> save(@RequestPart("document") DocumentDto document, MultipartFile file) {
         try {
             final Long idDoc = documentService.save(document, file);
             if (idDoc == null) {
@@ -76,7 +76,7 @@ public class DocumentController {
     }
 
     @DeleteMapping("/{id}")
-    void delete(@PathVariable Long id) throws Exception {
+    public void delete(@PathVariable Long id) {
         documentService.deleteById(id);
     }
 }

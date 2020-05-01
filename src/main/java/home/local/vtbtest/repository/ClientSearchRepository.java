@@ -1,7 +1,7 @@
 package home.local.vtbtest.repository;
 
 import home.local.vtbtest.entity.Client;
-import home.local.vtbtest.util.ClientSearchQueryCriteriaConsumer;
+import home.local.vtbtest.util.SearchQueryCriteriaConsumer;
 import home.local.vtbtest.util.SearchCriteria;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,18 +29,17 @@ public class ClientSearchRepository {
     public List<Client> searchClient(List<SearchCriteria> params) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Client> query = builder.createQuery(Client.class);
-        Root r = query.from(Client.class);
+        Root<Client> r = query.from(Client.class);
 
         Predicate predicate = builder.conjunction();
 
-        ClientSearchQueryCriteriaConsumer searchConsumer =
-                new ClientSearchQueryCriteriaConsumer(predicate, builder, r);
+        SearchQueryCriteriaConsumer<Client> searchConsumer =
+                new SearchQueryCriteriaConsumer(predicate, builder, r);
         params.stream().forEach(searchConsumer);
         predicate = searchConsumer.getPredicate();
         query.where(predicate);
 
-        List<Client> result = entityManager.createQuery(query).getResultList();
-        return result;
+        return entityManager.createQuery(query).getResultList();
     }
 
 }

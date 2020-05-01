@@ -3,11 +3,10 @@ package home.local.vtbtest.controller;
 import home.local.vtbtest.dto.ClientDto;
 import home.local.vtbtest.dto.DocumentDto;
 import home.local.vtbtest.entity.Client;
-import home.local.vtbtest.entity.Document;
+import home.local.vtbtest.exception.EntityWithIdNotFound;
 import home.local.vtbtest.service.ClientService;
 import home.local.vtbtest.util.SearchCriteria;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -48,38 +47,29 @@ public class ClientController {
 
 
     @PostMapping("/create")
-    Client create(@RequestBody @NotNull  ClientDto clientDto) {
+    public Client create(@RequestBody @NotNull  ClientDto clientDto) {
         return clientService.save(clientDto);
     }
 
     @PostMapping("/update")
-    Client update(@RequestBody ClientDto clientDto) {
+    public Client update(@RequestBody ClientDto clientDto) {
         return clientService.save(clientDto);
     }
 
 
     @GetMapping("/{id}")
-    Optional<ClientDto> readOne(@PathVariable Long id) {
+    public Optional<ClientDto> readOne(@PathVariable Long id) {
         return clientService.findOne(id);
     }
 
     @GetMapping("/{id}/docs")
-    List<DocumentDto> getClientDocs(@PathVariable Long id) throws Exception {
+    public List<DocumentDto> getClientDocs(@PathVariable Long id) throws EntityWithIdNotFound {
         return clientService.getClientDocs(id);
     }
 
-
     @DeleteMapping("/delete/{id}")
-    void delete(@PathVariable Long id) throws Exception {
+    public void delete(@PathVariable Long id) throws EntityWithIdNotFound {
         clientService.delete(id);
     }
 
-    @GetMapping("/client/inn/{inn}")
-    ResponseEntity<Long> idByInn(@PathVariable String inn) {
-        final Long id = clientService.idByInn(inn);
-        if (id == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(id);
-    }
 }

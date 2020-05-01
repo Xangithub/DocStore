@@ -32,6 +32,7 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
 
     @Override
     void mapSpecificFields(User source, UserDto destination) {
+        // Хеш пароля не нуждается в отображении на фронт
     }
 
     @Override

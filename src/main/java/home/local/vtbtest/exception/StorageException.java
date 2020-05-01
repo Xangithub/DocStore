@@ -1,4 +1,4 @@
-package home.local.vtbtest.storage;
+package home.local.vtbtest.exception;
 
 public class StorageException extends RuntimeException {
 
