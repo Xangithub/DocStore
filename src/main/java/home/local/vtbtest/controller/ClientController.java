@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class ClientController {
 
     private final ClientService clientService;
 
-    @GetMapping("/search")
+    @GetMapping("/all")
     public List<ClientDto> findAll(@RequestParam(value = "search", required = false) String search) {
         List<SearchCriteria> params = new ArrayList<>();
         if (search != null) {
@@ -47,7 +48,7 @@ public class ClientController {
 
 
     @PostMapping("/create")
-    Client create(@RequestBody ClientDto clientDto) {
+    Client create(@RequestBody @NotNull  ClientDto clientDto) {
         return clientService.save(clientDto);
     }
 
@@ -56,10 +57,6 @@ public class ClientController {
         return clientService.save(clientDto);
     }
 
-    @GetMapping("/all")
-    List<ClientDto> readAll() {
-        return clientService.findAll();
-    }
 
     @GetMapping("/{id}")
     Optional<ClientDto> readOne(@PathVariable Long id) {

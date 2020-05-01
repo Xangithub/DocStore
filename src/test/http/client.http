@@ -7,25 +7,44 @@ Authorization: Basic eGFuOnBhc3M=
 # Создание клиента
 POST http://localhost:8080/clients/create
 Content-Type: application/json; charset=utf-8;
-
+Authorization: Basic eGFuOnBhc3M=
 
  {
-    "name": "ООО Моя компашка",
+    "name": "Моя компашка",
     "inn": "111111",
-    "ogrn": "222222"
+    "ogrn": "222222",
+     "documentsIdList": [11,12]
  }
 ###
 
 # Создание клиента
-POST http://localhost:8080/clients/create
+POST http://localhost:8080/clients/update
 Content-Type: application/json; charset=utf-8;
+Authorization: Basic eGFuOnBhc3M=
 
 
  {
-    "name": "ООО Моя 32",
-    "inn": "112223",
-    "ogrn": "33333"
+   "id": 3,
+   "created": "2020-05-01 02:32:22",
+   "updated": null,
+   "name": "SlowSoft",
+   "inn": "6587907086",
+   "ogrn": "5128459615972",
+   "documentsIdList": []
  }
+###
+
+# Обновление клиента
+POST http://localhost:8080/clients/create
+Content-Type: application/json; charset=utf-8;
+Authorization: Basic eGFuOnBhc3M=
+
+
+{
+  "name": "ООО Моя 32",
+  "inn": "112223",
+  "ogrn": "33333"
+}
 ###
 
 # Прочитать клиента с ID 1
@@ -34,8 +53,24 @@ Authorization: Basic eGFuOnBhc3M=
 
 ###
 
+# Удалить клиента c док.
+DELETE http://localhost:8080/clients/delete/4
+Authorization: Basic eGFuOnBhc3M=
 
-# Удалить клиента
-DELETE http://localhost:8080/clients/delete/5
+###
+
+# Найти клиента name=Melkosoft
+GET http://localhost:8080/clients/all?search=name:Melkosoft
+Authorization: Basic eGFuOnBhc3M=
+
+#### Найти клиента inn=7946719033
+GET http://localhost:8080/clients/all?search=inn:7946719033
+Authorization: Basic eGFuOnBhc3M=
+
+###
+
+# Получение списка документов клиента
+GET http://localhost:8080/clients/3/docs
+Authorization: Basic eGFuOnBhc3M=
 
 ###

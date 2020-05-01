@@ -10,12 +10,12 @@ POST http://localhost:8080/users/create
 Content-Type: application/json; charset=utf-8;
 
 {
-  "username": "xan",
+  "username": "New1",
   "password": "pass",
   "fullName": "Moe polnoe imya1"
 }
 
-####  Создание пользователя
+####  Создание пользователя 2
 POST http://localhost:8080/users/create
 Content-Type: application/json; charset=utf-8;
 
@@ -24,6 +24,7 @@ Content-Type: application/json; charset=utf-8;
   "password": "PassOdered2",
   "fullName": "Moe polnoe imya22"
 }
+
 ###
 
 #получения по id
@@ -32,7 +33,23 @@ Authorization: Basic eGFuOnBhc3M=
 
 ###
 
-#Проверка взятия документов - создали клиента
+
+# Получение списка документов, размещённых пользователем
+GET http://localhost:8080/users/1/documents
+Authorization: Basic eGFuOnBhc3M=
+
+###
+
+
+#Получение информации о текущем пользователе
+GET http://localhost:8080/users/profile
+Authorization: Basic eGFuOnBhc3M=
+
+###
+
+
+# Дополнительные запросы
+# Проверка взятия документов - создали клиента
 POST http://localhost:8080/clients/create
 Content-Type: application/json; charset=utf-8;
 Authorization: Basic eGFuOnBhc3M=
@@ -43,6 +60,7 @@ Authorization: Basic eGFuOnBhc3M=
   "inn": "112222",
   "ogrn": "33333"
 }
+
 ###
 
 # Создание документа
@@ -68,17 +86,5 @@ Content-Disposition: form-data; name="file"; filename="sample.dat"
 < D:/intel-lan/log/setupapi.dev.20121022_125727.log
 --WebAppBoundary--
 
-###
-
-
-#список док.  по id пользователя
-GET http://localhost:8080/users/1/documents
-Authorization: Basic eGFuOnBhc3M=
-###
-
-
-#Вывести профиль тек. пользователя
-GET http://localhost:8080/users/profile
-Authorization: Basic eGFuOnBhc3M=
 ###
 

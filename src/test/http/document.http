@@ -36,7 +36,13 @@ Authorization: Basic eGFuOnBhc3M=
 ###
 
 # Удалить документ
-DELETE http://localhost:8080/documents/5
+DELETE http://localhost:8080/documents/6
+Authorization: Basic eGFuOnBhc3M=
+
+###
+
+# Взять файл
+GET http://localhost:8080/documents/6/file
 Authorization: Basic eGFuOnBhc3M=
 
 ###
